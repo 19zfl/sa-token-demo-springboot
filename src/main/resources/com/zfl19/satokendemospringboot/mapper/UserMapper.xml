@@ -8,4 +8,8 @@
         WHERE user_name = #{name}
           AND origin_pass = #{pwd}
     </select>
+    <!-- 查询用户详细信息 -->
+    <select id="selectUserDetail" resultType="com.zfl19.satokendemospringboot.domain.UserDetail">
+        select * from sa_user su LEFT JOIN sa_user_info sui ON su.id = sui.user_id WHERE su.id = #{id}
+    </select>
 </mapper>

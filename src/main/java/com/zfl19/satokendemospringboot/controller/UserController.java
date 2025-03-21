@@ -30,10 +30,22 @@ public class UserController {
         return SaResult.error();
     }
 
+    /**
+     * 用户封禁
+     * @param id
+     * @return
+     */
     @GetMapping("block/{id}")
     @SaCheckPermission("super-admin")
     public SaResult userBlocked(@PathVariable Long id) {
         return userService.userBlocked(id);
+    }
+
+    @GetMapping("list/{id}")
+    @SaCheckPermission({"super-admin", "user.*"})
+    // TODO 404
+    public SaResult selectUserDetail(@PathVariable Long id) {
+        return userService.selectUserDetail(id);
     }
 
 }

@@ -5,6 +5,7 @@ import cn.dev33.satoken.util.SaResult;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zfl19.satokendemospringboot.domain.LoginUser;
+import com.zfl19.satokendemospringboot.domain.UserDetail;
 import com.zfl19.satokendemospringboot.entity.User;
 import com.zfl19.satokendemospringboot.mapper.UserMapper;
 import com.zfl19.satokendemospringboot.service.IUserService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -87,5 +89,19 @@ public class UserServiceImpl implements IUserService {
             e.printStackTrace();
             return SaResult.error("封禁失败！");
         }
+    }
+
+    /**
+     * 查询用户详细/信息
+     * @param id
+     * @return
+     */
+    @Override
+    public SaResult selectUserDetail(Long id) {
+        UserDetail selectedUserDetail = userMapper.selectUserDetail(id);
+        if (Objects.nonNull(selectedUserDetail)) {
+            return SaResult.get(200, "查询成功！", selectedUserDetail);
+        }
+        return SaResult.error("服务器连接异常！");
     }
 }

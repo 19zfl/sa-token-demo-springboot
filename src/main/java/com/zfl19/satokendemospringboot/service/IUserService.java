@@ -14,4 +14,7 @@ public interface IUserService {
     /** 用户封禁 **/
     SaResult userBlocked(Long id);
 
+    /** 查询用户详细信息 **/
+    SaResult selectUserDetail(Long id);
+
 }
