@@ -18,6 +18,12 @@ import java.util.Date;
 public class UserServiceImpl implements IUserService {
     @Resource
     private UserMapper userMapper;
+
+    /**
+     * 用户注册
+     * @param user 注册信息
+     * @return
+     */
     @Override
     public Integer register(User user) {
         // 创建盐值
@@ -36,6 +42,12 @@ public class UserServiceImpl implements IUserService {
         return row;
     }
 
+    /**
+     * 用户登录
+     * @param name 账号
+     * @param pwd 密码
+     * @return
+     */
     @Override
     public SaResult doLogin(String name, String pwd) {
         // 创建查询条件Wrapper
@@ -57,5 +69,23 @@ public class UserServiceImpl implements IUserService {
             return SaResult.get(200, "登录成功！", StpUtil.getTokenInfo());
         }
         return SaResult.error("用户名或密码错误！");
+    }
+
+    /**
+     * 用户封禁
+     * @param id
+     * @return
+     */
+    @Override
+    public SaResult userBlocked(Long id) {
+        try {
+            User user = userMapper.selectById(id);
+            user.setState(2);
+            userMapper.insertOrUpdate(user);
+            return SaResult.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return SaResult.error("封禁失败！");
+        }
     }
 }
